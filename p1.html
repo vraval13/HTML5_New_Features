@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geolocation API</title>
+  
+  <!-- Bootstrap extended link -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="icon" href="ic.png" type="image/x-icon">
+
+  <style>
+    body 
+    {
+      font-family: 'Arial', sans-serif;
+      background:url('pic-1.jpeg');
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+      background-image: linear-gradient(0deg, #ffdee9 0%, #b5fffc 100%);
+    }
+
+    .container 
+    {
+      width: 700px;
+      background-image: linear-gradient(45deg, #85ffbd 0%, #fffb7d 100%);
+      background-size: cover;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin: 0 auto;
+      font-size: 22px;
+      border: 2px solid black;
+    }
+
+    .container:hover
+    {
+      cursor: pointer;
+      background:url('loc.jpg');
+      background-size: cover;
+      border: 2px solid black;
+      border-radius: 15px;
+      width: 600px;
+      font-size: 25px;
+      max-height: 300px;
+      transition: 0.9s all ease-in-out;
+    }
+    h1 
+    {
+      color: #333;
+    }
+
+    button 
+    {
+      background-color: blue;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover
+    {
+      border: 2px solid black;
+      background-color: rgba(11, 241, 222, 0.845);
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+    <center>
+      <h1><b>Practical-4 (A)</b></h1><br>
+      <div class="container">
+        <h1 style="color: #7acfd6;">Implementing Geolocation API</h1>
+        <p style="color: #4CAF50;"><b>The Geolocation API is a standard web API that provides a way for web applications
+          to request the user's location information.</b></p>
+          <button id="getLocationBtn" class="btn btn-outline-success" onclick="getLocationAndShow()">Get My Location</button>
+          <div id="locationInfo"></div>
+          <script>
+            function getLocationAndShow() 
+            {
+              if (navigator.geolocation) 
+              {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+              } 
+              else 
+              {
+                alert("Geolocation is not supported by this browser.");
+              }
+            }
+
+            function showPosition(position) 
+            {
+              var latitude = position.coords.latitude;
+              var longitude = position.coords.longitude;
+              
+              document.getElementById("locationInfo").innerHTML = "<b>Latitude:</b> " + latitude + "<br><b>Longitude:</b> " + longitude;
+
+              alert("Latitude: " + latitude + "\nLongitude: " + longitude);
+            }
+
+            function showError(error) 
+            {
+              switch(error.code) 
+              {
+                case error.PERMISSION_DENIED:
+                  alert("User denied the request for Geolocation.");
+                  break;
+                case error.POSITION_UNAVAILABLE:
+                  alert("Location information is unavailable.");
+                  break;
+                case error.TIMEOUT:
+                  alert("The request to get user location timed out.");
+                  break;
+                case error.UNKNOWN_ERROR:
+                  alert("An unknown error occurred.");
+                  break;
+              }
+            }
+
+            function showLocationOnGMaps()
+            {
+              getLocationAndShow();
+              
+              navigator.geolocation.getCurrentPosition(function (position) 
+              {
+                var mapsUrl = "https://www.google.com/maps?q=@" + position.coords.latitude + "," + position.coords.longitude;
+                window.open(mapsUrl, "_blank");
+              }, showError);
+            }
+          </script>
+          <!-- <button id="getLocationBtn" class="btn btn-outline-success" onclick="getLocationAndShow()">Get My Location</button> -->
+          <button id="showInMapsBtn" class="btn btn-outline-success" onclick="showLocationOnGMaps()">Click here to See on The Maps!</button>
+        
+          <!-- <div id="locationInfo"></div> -->
+        </div>
+    </center>
+</body>
+</html>

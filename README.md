@@ -1,5 +1,3 @@
-﻿# HTML5_New_Features
-
 # Geolocation API:-
 
 # Initial Window:
